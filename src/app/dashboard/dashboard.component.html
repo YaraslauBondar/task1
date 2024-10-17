@@ -1,0 +1,34 @@
+<div class="container mx-auto p-6">
+  <mat-toolbar color="primary" class="rounded-lg shadow-md toolbar">
+    <span class="text-lg font-bold">Chart Dashboard</span>
+    <span class="flex-grow"></span>
+
+    <mat-form-field [formGroup]="range">
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [rangePicker]="picker" [min]="minDate" [max]="maxDate">
+        <input matStartDate placeholder="Start date" formControlName="start">
+        <input matEndDate placeholder="End date" formControlName="end">
+      </mat-date-range-input>
+      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+  </mat-toolbar>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mt-6">
+    <app-chart-widget *ngFor="let chart of charts; let i = index"
+                      [chart]="chart"
+                      [sensors]="sensors"
+                      [availableSensors]="availableSensors"
+                      [startDate]="range.controls['start'].getRawValue()"
+                      [endDate]="range.controls['end'].getRawValue()"
+                      (remove)="removeChart(i)">
+    </app-chart-widget>
+  </div>
+
+  <div class="mt-6 flex justify-center" *ngIf="charts.length < 4">
+    <button mat-raised-button color="accent" class="px-8 py-2 font-semibold" (click)="addChart()">
+      Add Chart
+    </button>
+  </div>
+</div>

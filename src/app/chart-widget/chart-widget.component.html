@@ -1,0 +1,46 @@
+<div class="border rounded-lg shadow-lg p-6 bg-white">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-xl font-semibold">{{ chart.config.title }}</h2>
+    <button mat-icon-button color="warn" (click)="onRemove()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div appChart
+       [chartType]="chart.config.type"
+       [chartTitle]="chart.config.title"
+       [chartData]="chart.data"
+       [chartColor]="chart.config.color"
+       [startDate]="startDate"
+       [endDate]="endDate"
+       class="chart-container">
+  </div>
+
+  <div class="mt-6">
+    <mat-form-field appearance="outline" class="w-full mb-4">
+      <mat-label>Chart Type</mat-label>
+      <mat-select [(ngModel)]="chart.config.type">
+        <mat-option value="line">Line</mat-option>
+        <mat-option value="bar">Bar</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full mb-4">
+      <input matInput placeholder="Chart Title" [(ngModel)]="chart.config.title">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full mb-4">
+      <input matInput [(ngModel)]="chart.config.color" type="color">
+      <mat-label>Chart Color</mat-label>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full mb-4">
+      <mat-label>Select Sensors</mat-label>
+      <mat-select [(ngModel)]="chart.config.sensors" (selectionChange)="onSensorsChange()" multiple>
+        <mat-option *ngFor="let sensor of availableSensors" [value]="sensor">
+          {{ sensor }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
