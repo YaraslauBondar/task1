@@ -16,6 +16,7 @@ export class ChartWidgetComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if(changes['chart'] && this.chart) {
+      console.log(this.chart)
       this.chart.config.sensors = this.availableSensors.slice(0, 2);
       this.updateChartData();
     }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Chart, Sensor } from '../chart.interface';
+import {DashboardService} from '../services/dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,33 +9,55 @@ import { Chart, Sensor } from '../chart.interface';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  availableSensors: string[] = [
+  availableSensors: string[] = []; /*= [
     'Temperature 1',
     'Humidity 1',
     'Light 1',
     'Temperature 2',
     'Humidity 2',
     'Light 2'
-  ];
+  ];*/
 
   charts: Chart[] = [];
   sensors: Sensor[] = [];
 
-  minDate: Date = new Date();
-  maxDate: Date = new Date(new Date().setMonth((new Date()).getMonth() + 1));
+  minDate: Date;// = new Date();
+  maxDate: Date;// = new Date(new Date().setMonth((new Date()).getMonth() + 1));
 
   range: FormGroup = new FormGroup({
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
   });
 
-  ngOnInit() {
-    this.availableSensors.map(el => {
-      this.sensors.push(this.generateData(el))
-    })
+  constructor(
+    public dashboardService: DashboardService
+  ) {
+    this.minDate = this.dashboardService.minDate;
+    this.maxDate = this.dashboardService.maxDate;
   }
 
-  generateData(name: string): Sensor {
+  ngOnInit() {
+    this.availableSensors.map(el => {
+      this.sensors.push(this.dashboardService.generateData(el))
+    })
+    this.updateCharts();
+  }
+
+  addChart(): void {
+    this.dashboardService.addChart();
+    this.updateCharts();
+  }
+
+  removeChart(index: number): void {
+    this.dashboardService.removeChart(index);
+    this.updateCharts();
+  }
+
+  updateCharts(): void {
+    this.charts = this.dashboardService.charts;
+  }
+
+  /*generateData(name: string): Sensor {
     const today: Date = new Date();
 
     return {
@@ -67,5 +90,5 @@ export class DashboardComponent implements OnInit {
 
   removeChart(index: number): void {
     this.charts.splice(index, 1);
-  }
+  }*/
 }
