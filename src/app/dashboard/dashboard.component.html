@@ -16,17 +16,17 @@
   </mat-toolbar>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mt-6">
-    <app-chart-widget *ngFor="let chart of charts; let i = index"
+    <app-chart-widget *ngFor="let chart of dashboardService.charts"
                       [chart]="chart"
-                      [sensors]="sensors"
-                      [availableSensors]="availableSensors"
+                      [availableSensors]="dashboardService.availableSensors"
                       [startDate]="range.controls['start'].getRawValue()"
                       [endDate]="range.controls['end'].getRawValue()"
-                      (remove)="removeChart(i)">
+                      (updateSensors)="updateSensors(chart.config.id)"
+                      (remove)="removeChart(chart.config.id)">
     </app-chart-widget>
   </div>
 
-  <div class="mt-6 flex justify-center" *ngIf="charts.length < 4">
+  <div class="mt-6 flex justify-center" *ngIf="dashboardService.charts.length < 4">
     <button mat-raised-button color="accent" class="px-8 py-2 font-semibold" (click)="addChart()">
       Add Chart
     </button>

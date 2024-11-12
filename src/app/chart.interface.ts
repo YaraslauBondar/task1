@@ -1,4 +1,5 @@
 export interface ChartConfig {
+  id: number;
   type: 'line' | 'bar';
   title: string;
   sensors: string[];
