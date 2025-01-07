@@ -10,7 +10,7 @@
        [chartType]="chart.config.type"
        [chartTitle]="chart.config.title"
        [chartData]="chart.data"
-       [chartColor]="chart.config.color"
+       [chartColors]="chart.config.colors"
        [startDate]="startDate"
        [endDate]="endDate"
        class="chart-container">
@@ -30,11 +30,6 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="w-full mb-4">
-      <input matInput [(ngModel)]="chart.config.color" type="color">
-      <mat-label>Chart Color</mat-label>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="w-full mb-4">
       <mat-label>Select Sensors</mat-label>
       <mat-select [(ngModel)]="chart.config.sensors" (selectionChange)="onSensorsChange()" multiple>
         <mat-option *ngFor="let sensor of availableSensors" [value]="sensor">
@@ -42,5 +37,13 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+
+    <div *ngFor="let sensor of chart.config.colors">
+      <mat-form-field appearance="outline" class="w-full mb-4">
+        <input matInput [(ngModel)]="sensor.color" (ngModelChange)="changeColor()" type="color">
+        <mat-label>{{sensor.name}} Color</mat-label>
+      </mat-form-field>
+    </div>
+
   </div>
 </div>

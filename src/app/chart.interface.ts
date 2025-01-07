@@ -3,7 +3,7 @@ export interface ChartConfig {
   type: 'line' | 'bar';
   title: string;
   sensors: string[];
-  color: string;
+  colors: SensorColor[];
 }
 
 export interface ChartData {
@@ -22,4 +22,9 @@ export interface Sensor {
     date: number;
     value: number;
   }[];
+}
+
+export interface SensorColor {
+  name: string;
+  color: string;
 }

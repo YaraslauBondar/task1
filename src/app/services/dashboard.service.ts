@@ -52,7 +52,12 @@ export class DashboardService {
           type: 'line',
           title: 'Sensor Data',
           sensors: this.availableSensors.slice(0, 2),
-          color: '#ff0000'
+          colors: this.availableSensors.slice(0, 2).map(el => {
+            return {
+              name: el,
+              color: '#ff0000'
+            }
+          }),
         },
         data: []
       };
@@ -66,6 +71,15 @@ export class DashboardService {
     if(chart) {
       chart.data = this.sensors.filter(el => chart.config.sensors.includes(el.name));
       this.filterDataForChart(chart);
+
+      chart.config.sensors.forEach(el => {
+        if(!chart.config.colors.find(item => item.name === el)) {
+          chart.config.colors.push({
+            name: el,
+            color: '#ff0000'
+          })
+        }
+      })
     }
   }
 

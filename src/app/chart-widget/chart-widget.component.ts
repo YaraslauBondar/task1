@@ -14,6 +14,10 @@ export class ChartWidgetComponent {
   @Output() remove: EventEmitter<void> = new EventEmitter<void>();
   @Output() updateSensors: EventEmitter<void> = new EventEmitter<void>();
 
+  changeColor(): void {
+    this.chart.config.colors = this.chart.config.colors.map(el => el);
+  }
+
   onSensorsChange(): void {
     this.updateSensors.emit();
   }
